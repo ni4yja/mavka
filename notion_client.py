@@ -45,11 +45,11 @@ def create_page(article: dict):
     payload = {
         "parent": {"database_id": NOTION_DATABASE_ID},
         "properties": {
-            "Author": {
-                "rich_text": [{"text": {"content": article["author"]}}]
-            },
             "Title": {
                 "title": [{"text": {"content": article["title"]}}]
+            },
+            "Author": {
+                "rich_text": [{"text": {"content": article["author"]}}] if article.get("author") else []
             },
             "Link": {
                 "url": article["url"]
