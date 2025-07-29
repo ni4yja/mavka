@@ -22,7 +22,7 @@ jobs:
     - name: Install uv and dependencies
       run: |
         pip install uv
-        uv pip install --system --project . --group default
+        uv pip install --system --project . --requirements requirements.txt
 
     - name: Run fetch script
       env:
