@@ -27,7 +27,7 @@ def is_duplicate(url: str) -> bool:
         f"https://api.notion.com/v1/databases/{NOTION_DATABASE_ID}/query",
         headers=HEADERS,
         json=query_payload,
-        timeout=10.0
+        timeout=30.0
     )
 
     if response.status_code != 200:
@@ -61,7 +61,7 @@ def create_page(article: dict):
         "https://api.notion.com/v1/pages",
         headers=HEADERS,
         json=payload,
-        timeout=10.0
+        timeout=30.0
     )
 
     if response.status_code == 200:
