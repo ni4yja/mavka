@@ -2,12 +2,13 @@ name: Daily Article Fetch
 
 on:
   schedule:
-    - cron: '0 9 * * *'  # щоденно о 09:00 UTC
-  workflow_dispatch:     # щоб запускати вручну з UI GitHub
+    - cron: '0 18 * * *'
+  workflow_dispatch:
 
 jobs:
   fetch_articles:
     runs-on: ubuntu-latest
+    environment: mavka
 
     steps:
     - name: Checkout repo
