@@ -13,7 +13,35 @@ HEADERS = {
     "Content-Type": "application/json",
 }
 
+def is_duplicate(url: str) -> bool:
+    query_payload = {
+        "filter": {
+            "property": "Link",
+            "url": {
+                "equals": url
+            }
+        }
+    }
+
+    response = httpx.post(
+        f"https://api.notion.com/v1/databases/{NOTION_DATABASE_ID}/query",
+        headers=HEADERS,
+        json=query_payload,
+        timeout=10.0
+    )
+
+    if response.status_code != 200:
+        print(f"❌ Failed to query database: {response.status_code} | {response.text}")
+        return False
+
+    data = response.json()
+    return len(data.get("results", [])) > 0
+
 def create_page(article: dict):
+    if is_duplicate(article["url"]):
+        print(f"⚠️ Duplicate found, skipping: {article['title']}")
+        return
+
     payload = {
         "parent": {"database_id": NOTION_DATABASE_ID},
         "properties": {
