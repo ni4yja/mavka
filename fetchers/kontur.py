@@ -15,12 +15,19 @@ def fetch_articles():
     records = soup.select(".post-card")
 
     results = []
+
     for record in records:
-        title = record.select_one(".entry-title")
+        text = record.select_one(".entry-title").get_text(strip=True)
         link = record.select_one(".entry-title a")
 
+        dot_index = int(text.find('.'))
+
+        author = text[0: dot_index]
+        title = text[dot_index + 2: len(text)]
+
         results.append({
-            "title": title.get_text(strip=True),
+            "author": author,
+            "title": title,
             "url": link["href"]
         })
 

@@ -1,6 +1,8 @@
 import os
 import httpx
 from dotenv import load_dotenv
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 load_dotenv()
 
@@ -37,6 +39,14 @@ def is_duplicate(url: str) -> bool:
     data = response.json()
     return len(data.get("results", [])) > 0
 
+def is_archive(status: str) -> bool:
+    query_payload = {
+        "filter": {
+            "property": "Status",
+            "select": {" equals": "todo"}
+        }
+    }
+
 def create_page(article: dict):
     if is_duplicate(article["url"]):
         print(f"⚠️ Duplicate found, skipping: {article['title']}")
@@ -54,6 +64,14 @@ def create_page(article: dict):
             "Link": {
                 "url": article["url"]
             },
+            "Status": {
+                "select": {"name": "todo"}
+            },
+            "Date": {
+                "date": {
+                    "start": datetime.now(ZoneInfo("Europe/Warsaw")).isoformat()
+                }
+            }
         }
     }
 
