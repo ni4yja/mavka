@@ -7,11 +7,11 @@ from zoneinfo import ZoneInfo
 load_dotenv()
 
 NOTION_TOKEN = os.getenv("NOTION_TOKEN")
-NOTION_DATABASE_ID = os.getenv("NOTION_DATABASE_ID")
+NOTION_DATA_SOURCE_ID = os.getenv("NOTION_DATA_SOURCE_ID")
 
 HEADERS = {
     "Authorization": f"Bearer {NOTION_TOKEN}",
-    "Notion-Version": "2022-06-28",
+    "Notion-Version": "2025-09-03",
     "Content-Type": "application/json",
 }
 
@@ -26,7 +26,7 @@ def is_duplicate(url: str) -> bool:
     }
 
     response = httpx.post(
-        f"https://api.notion.com/v1/databases/{NOTION_DATABASE_ID}/query",
+        f"https://api.notion.com/v1/data_sources/{NOTION_DATA_SOURCE_ID}/query",
         headers=HEADERS,
         json=query_payload,
         timeout=30.0
@@ -40,12 +40,7 @@ def is_duplicate(url: str) -> bool:
     return len(data.get("results", [])) > 0
 
 def is_archive(status: str) -> bool:
-    query_payload = {
-        "filter": {
-            "property": "Status",
-            "select": {" equals": "todo"}
-        }
-    }
+    return status != "todo"
 
 def create_page(article: dict):
     if is_duplicate(article["url"]):
@@ -53,7 +48,10 @@ def create_page(article: dict):
         return
 
     payload = {
-        "parent": {"database_id": NOTION_DATABASE_ID},
+        "parent": {
+            "type": "data_source_id",
+            "data_source_id": NOTION_DATA_SOURCE_ID,
+        },
         "properties": {
             "Title": {
                 "title": [{"text": {"content": article["title"]}}]
