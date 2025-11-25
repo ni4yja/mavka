@@ -11,8 +11,6 @@ load_dotenv(env_file)
 NOTION_TOKEN = os.getenv("NOTION_TOKEN")
 NOTION_DATA_SOURCE_ID = os.getenv("NOTION_DATA_SOURCE_ID")
 
-print("DEBUG DATA_SOURCE_ID:", os.getenv("NOTION_DATA_SOURCE_ID"))
-
 HEADERS = {
     "Authorization": f"Bearer {NOTION_TOKEN}",
     "Notion-Version": "2025-09-03",
@@ -62,6 +60,9 @@ def create_page(article: dict):
             },
             "Author": {
                 "rich_text": [{"text": {"content": article["author"]}}] if article.get("author") else []
+            },
+            "Source": {
+                "rich_text": [{"text": {"content": article["source"]}}] if article.get("source") else []
             },
             "Link": {
                 "url": article["url"]
