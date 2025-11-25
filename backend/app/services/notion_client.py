@@ -1,13 +1,17 @@
 import os
 import httpx
 from dotenv import load_dotenv
+from pathlib import Path
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
-load_dotenv()
+env_file = Path.cwd() / ".env.test"
+load_dotenv(env_file)
 
 NOTION_TOKEN = os.getenv("NOTION_TOKEN")
 NOTION_DATA_SOURCE_ID = os.getenv("NOTION_DATA_SOURCE_ID")
+
+print("DEBUG DATA_SOURCE_ID:", os.getenv("NOTION_DATA_SOURCE_ID"))
 
 HEADERS = {
     "Authorization": f"Bearer {NOTION_TOKEN}",

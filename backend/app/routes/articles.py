@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.services.mavka_service import fetch_all, save_article
+from backend.app.services.mavka_service import fetch_all, save_article
 
 router = APIRouter()
 

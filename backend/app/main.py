@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routes import articles, sources
+from .routes import articles, sources
 
 app = FastAPI(title="MAVKA API")
 

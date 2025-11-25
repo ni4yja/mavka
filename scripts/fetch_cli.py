@@ -2,7 +2,7 @@ import argparse
 import time
 from fetchers.revisions import fetch_articles as fetch_revisions
 from fetchers.kontur import fetch_articles as fetch_kontur
-from notion_client import create_page, is_duplicate
+from backend.app.services.notion_client import create_page, is_duplicate
 
 FETCHERS = {
     "revisions": fetch_revisions,
