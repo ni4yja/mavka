@@ -43,7 +43,7 @@ def is_archive(status: str) -> bool:
     query_payload = {
         "filter": {
             "property": "Status",
-            "select": {" equals": "todo"}
+            "select": {" equals": "New"}
         }
     }
 
@@ -65,7 +65,7 @@ def create_page(article: dict):
                 "url": article["url"]
             },
             "Status": {
-                "select": {"name": "todo"}
+                "select": {"name": "New"}
             },
             "Date": {
                 "date": {
