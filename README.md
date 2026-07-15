@@ -5,7 +5,7 @@ Mavka is a Python script that collects and saves articles from multiple (two for
 - Parses articles from different sources (currently: [Re/visions](https://revisionsjournal.com/), [Kontur](https://kontur.media/))
 - Checks for duplicates in Notion before adding new entries
 - Adds new articles to Notion via API
-- Configured to run daily using GitHub Actions
+- Configured to run weekly using GitHub Actions
 - Allows selecting specific sources to fetch articles from via command-line arguments
 
 ## How to Use
